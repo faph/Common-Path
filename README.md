@@ -6,15 +6,17 @@ Say you have a typical file history list:
 
 ```python
 >>> history = [
-...     r'C:\Users\Adam Smith\Documents\doc1.txt',
-...     r'C:\Users\Adam Smith\Documents\doc2.txt',
-...     r'D:\doc4.txt',
-...     r'C:\Users\Adam Smith\Documents\doc3.txt',
-...     r'C:\Users\Adam Smith\Documents\Folder\image.jpg'
+...     'C:\\Users\\Adam Smith\\Documents\\doc1.txt',
+...     'C:\\Users\\Adam Smith\\Documents\\doc2.txt',
+...     'C:\\Users\\log.txt',
+...     'D:\\doc4.txt',
+...     'C:\\Users\\Adam Smith\\Documents\\doc3.txt',
+...     'C:\\Users\\Adam Smith\\Documents\\Folder\\image.jpg'
 ... ]
 ```
 
-You want to know the most common path `C:\Users\Adam Smith\Documents`, ignoring the occasional unusual path `D:\`:
+You want to know the most common path `C:\Users\Adam Smith\Documents`, ignoring the occasional unusual paths 
+`C:\Users` and `D:\`:
 
 ```python
 >>> from commonpath import CommonPath
