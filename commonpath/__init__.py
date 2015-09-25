@@ -23,5 +23,50 @@
 # SOFTWARE.
 
 from ._version import get_versions
+
 __version__ = get_versions()['version']
 del get_versions
+
+from collections import defaultdict, Counter
+from os.path import sep, normpath
+import sys
+
+
+class CommonPath(object):
+    def __init__(self, paths):
+        #: List of paths to analyse
+        self.paths = map(normpath, paths)
+        #: Default maximum path depth to analyse
+        self.default_max_depth = sys.maxsize
+
+        split_paths = [p.split(sep) for p in self.paths]
+        # Dict of list of unpacked paths with path depth level as keys
+        # e.g. {0: ['', ''],
+        #       1: ['/home', '/home', '/usr'],
+        #       2: ['/home/user1', '/home/user1', '/usr/bin']}
+        levels = defaultdict(list)
+        for split_path in split_paths:
+            for level, ele in enumerate(split_path):
+                levels[level].append(sep.join(split_path[0:level + 1]))
+        #print(levels)
+
+        self.most_common = {}
+        for level in levels:
+            self.most_common[level] = Counter(levels[level]).most_common(1)[0]
+            #print(level, self.most_common[level])
+
+    def natural(self, max_depth=None):
+        max_depth = max_depth or self.default_max_depth
+        return
+
+    def absolute(self, max_depth=None):
+        max_depth = max_depth or self.default_max_depth
+        max_count = 0
+        result = None
+        for i, common in self.most_common.items():
+            if common[1] < max_count or i > max_depth - 1:
+                break
+            else:
+                max_count = common[1]
+                result = common[0]
+        return result
