@@ -14,7 +14,7 @@ Say you have a typical file history list::
     ... ]
 
 You want to know the most common path :file:`C:\Users\Adam Smith\Documents`, ignoring the occasional unusual path
-:file:`D:\`.
+:file:`D:\`::
 
     >>> from commonpath import CommonPath
     >>> CommonPath(history).natural()
