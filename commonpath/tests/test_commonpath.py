@@ -12,6 +12,12 @@ class TestCommonPath(unittest.TestCase):
              '/home/user1/tmp/covert/operator',
              '/home/user1/tmp/coven/members']
 
+    def test_nat_paths(self):
+        self.assertEqual(CommonPath(self.list2).natural(), normpath('/home/user1/tmp'))
+
+    def test_nat_paths_max_depth(self):
+        self.assertEqual(CommonPath(self.list2).natural(max_depth=3), normpath('/home/user1'))
+
     def test_abs_paths(self):
         self.assertEqual(CommonPath(self.list2).absolute(), normpath('/home'))
 
