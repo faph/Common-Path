@@ -15,8 +15,8 @@ Say you have a typical file history list:
 ... ]
 ```
 
-You want to know the most common path `C:\Users\Adam Smith\Documents`, ignoring the occasional unusual paths 
-`C:\Users` and `D:\`:
+You want to know the common path `C:\Users\Adam Smith\Documents`, ignoring the occasional unusual paths `C:\Users` and 
+`D:\`:
 
 ```python
 >>> from commonpath import CommonPath
@@ -24,7 +24,7 @@ You want to know the most common path `C:\Users\Adam Smith\Documents`, ignoring 
 'C:\\Users\\Adam Smith\\Documents'
 ```
 
-If you really want to know the *absolute most common* path:
+If you really want to know the absolute *most* common path:
 
 ```python
 >>> CommonPath(history).absolute()
