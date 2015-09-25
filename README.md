@@ -24,6 +24,13 @@ You want to know the most common path `C:\Users\Adam Smith\Documents`, ignoring 
 'C:\\Users\\Adam Smith\\Documents'
 ```
 
+If you really want to know the *absolute most common* path:
+
+```python
+>>> CommonPath(history).absolute()
+'C:\\Users'
+```
+
 ## Licence
 
 Distributed under the [MIT licence](LICENSE).
