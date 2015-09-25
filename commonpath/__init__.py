@@ -38,7 +38,10 @@ class CommonPath(object):
         self.paths = list(map(normpath, paths))
         #: Default maximum path depth to analyse
         self.default_max_depth = sys.maxsize
+        #: Most common path for different path depths
+        self.most_common = self._most_common()
 
+    def _most_common(self):
         split_paths = [p.split(sep) for p in self.paths]
         # Dict of list of unpacked paths with path depth level as keys
         # e.g. {0: ['', '', ''],
@@ -50,20 +53,17 @@ class CommonPath(object):
                 levels[level].append(sep.join(split_path[0:level + 1]))
         #print(levels)
 
-        # Dict of tuples (most common path, count) with path depth level as keys
-        # e.g. {0: ('', 3),
-        #       1: ('/home', 2),
-        #       2: ('/home/user1', 2)}
-        self.most_common = {}
-        for level in levels:
-            self.most_common[level] = Counter(levels[level]).most_common(1)[0]
-            print(level, self.most_common[level])
+        # List of tuples (most common path, count) by increasing path depth
+        # e.g. [('', 3),
+        #       ('/home', 2),
+        #       ('/home/user1', 2)]
+        return [Counter(level).most_common(1)[0] for level in levels.values()]
 
     def natural(self, max_depth=None):
         max_depth = max_depth or self.default_max_depth
         min_count = min(0.75 * len(self.paths), self.most_common[0][1])
         result = None
-        for i, common in self.most_common.items():
+        for i, common in enumerate(self.most_common):
             if common[1] < round(min_count, 0) or i > max_depth - 1:
                 break
             else:
@@ -75,7 +75,7 @@ class CommonPath(object):
         max_depth = max_depth or self.default_max_depth
         max_count = 0
         result = None
-        for i, common in self.most_common.items():
+        for i, common in enumerate(self.most_common):
             if common[1] < max_count or i > max_depth - 1:
                 break
             else:
