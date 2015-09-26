@@ -19,15 +19,22 @@ You want to know the common path `C:\Users\Adam Smith\Documents`, ignoring the o
 `D:\`:
 
 ```python
->>> from commonpath import CommonPath
->>> CommonPath(history).natural()
+>>> import commonpath
+>>> commonpath.natural(history)
 'C:\\Users\\Adam Smith\\Documents'
+```
+
+Want to limit the path depth?
+
+```python
+>>> commonpath.natural(history, max_depth=3)
+'C:\\Users\\Adam Smith'
 ```
 
 If you really want to know the absolute *most* common path:
 
 ```python
->>> CommonPath(history).most()
+>>> commonpath.most(history)
 'C:\\Users'
 ```
 

@@ -29,15 +29,53 @@ del get_versions
 
 from collections import defaultdict, Counter
 from os.path import sep, normpath
-import sys
+
+
+def natural(paths, max_depth=None):
+    """
+    Return the "natural" deepest common path.
+
+    Incidental uncommon path names are ignored. A minimum number of common paths threshold is used, depending on the
+    path depth, i.e. deeper path names are preferred as long as it is sufficiently common.
+
+    :param paths: List of paths to analyse
+    :type paths: list
+    :param max_depth: Maximum path depth to analyse
+    :type max_depth: int
+    :return: common path
+    :rtype: str
+    """
+    return CommonPath(paths).natural(max_depth)
+
+
+def most(paths, max_depth=None):
+    """
+    Return the most common path.
+
+    The most common path is evaluated at increasing path depths. As soon as the frequency/count of the common path
+    goes down, the path is returned.
+
+    :param paths: List of paths to analyse
+    :type paths: list
+    :param max_depth: maximum path depth to analyse
+    :type max_depth: int
+    :return: common path
+    :rtype: str
+    """
+    return CommonPath(paths).most(max_depth)
 
 
 class CommonPath(object):
+    #: Default maximum path depth to analyse
+    default_max_depth = 99
+    #: Minimum required frequency of natural common path
+    min_freq = 0.75
+    #: Reduce the minimum required frequency at increasing depth
+    depth_red_freq = 0.10
+
     def __init__(self, paths):
         #: List of paths to analyse
         self.paths = list(map(normpath, paths))
-        #: Default maximum path depth to analyse
-        self.default_max_depth = sys.maxsize
         #: Most common path for different path depths
         self.most_common = self._most_common()
 
@@ -59,40 +97,20 @@ class CommonPath(object):
         return [Counter(level).most_common(1)[0] for level in levels.values()]
 
     def natural(self, max_depth=None):
-        """
-        Return the "natural" deepest common path.
-
-        Incidental uncommon path names are ignored. A minimum number of common paths threshold is used, depending on the
-        path depth, i.e. deeper path names are preferred as long as it is sufficiently common.
-
-        :param max_depth: maximum path depth to analyse
-        :type max_depth: int
-        :return: common path
-        :rtype: str
-        """
+        """Return the "natural" deepest common path."""
         max_depth = max_depth or self.default_max_depth
-        min_count = min(0.75 * len(self.paths), self.most_common[0][1])
+        min_count = min(self.min_freq * len(self.paths), self.most_common[0][1])
         result = None
         for i, common in enumerate(self.most_common):
             if common[1] < round(min_count, 0) or i > max_depth - 1:
                 break
             else:
                 result = common[0]
-                min_count *= 0.9
+                min_count *= 1 - self.depth_red_freq
         return result
 
     def most(self, max_depth=None):
-        """
-        Return the most common path.
-
-        The most common path is evaluated at increasing path depths. As soon as the frequency/count of the common path
-        goes down, the path is returned.
-
-        :param max_depth: maximum path depth to analyse
-        :type max_depth: int
-        :return: common path
-        :rtype: str
-        """
+        """Return the most common path."""
         max_depth = max_depth or self.default_max_depth
         max_count = 0
         result = None

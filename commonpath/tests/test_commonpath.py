@@ -1,5 +1,5 @@
 import unittest
-from commonpath import CommonPath
+import commonpath
 from os.path import normpath
 
 
@@ -13,13 +13,13 @@ class TestCommonPath(unittest.TestCase):
              '/home/user1/tmp/coven/members']
 
     def test_nat_paths(self):
-        self.assertEqual(CommonPath(self.list2).natural(), normpath('/home/user1/tmp'))
+        self.assertEqual(commonpath.natural(self.list2), normpath('/home/user1/tmp'))
 
     def test_nat_paths_max_depth(self):
-        self.assertEqual(CommonPath(self.list2).natural(max_depth=3), normpath('/home/user1'))
+        self.assertEqual(commonpath.natural(self.list2, max_depth=3), normpath('/home/user1'))
 
     def test_abs_paths(self):
-        self.assertEqual(CommonPath(self.list2).most(), normpath('/home'))
+        self.assertEqual(commonpath.most(self.list2), normpath('/home'))
 
     def test_abs_paths_max_depth(self):
-        self.assertEqual(CommonPath(self.list1).most(max_depth=3), normpath('/home/user1'))
+        self.assertEqual(commonpath.most(self.list1, max_depth=3), normpath('/home/user1'))
