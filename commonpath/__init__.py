@@ -51,7 +51,6 @@ class CommonPath(object):
         for split_path in split_paths:
             for level, ele in enumerate(split_path):
                 levels[level].append(sep.join(split_path[0:level + 1]))
-        #print(levels)
 
         # List of tuples (most common path, count) by increasing path depth
         # e.g. [('', 3),
@@ -60,6 +59,17 @@ class CommonPath(object):
         return [Counter(level).most_common(1)[0] for level in levels.values()]
 
     def natural(self, max_depth=None):
+        """
+        Return the "natural" deepest common path.
+
+        Incidental uncommon path names are ignored. A minimum number of common paths threshold is used, depending on the
+        path depth, i.e. deeper path names are preferred as long as it is sufficiently common.
+
+        :param max_depth: maximum path depth to analyse
+        :type max_depth: int
+        :return: common path
+        :rtype: str
+        """
         max_depth = max_depth or self.default_max_depth
         min_count = min(0.75 * len(self.paths), self.most_common[0][1])
         result = None
@@ -72,6 +82,17 @@ class CommonPath(object):
         return result
 
     def most(self, max_depth=None):
+        """
+        Return the most common path.
+
+        The most common path is evaluated at increasing path depths. As soon as the frequency/count of the common path
+        goes down, the path is returned.
+
+        :param max_depth: maximum path depth to analyse
+        :type max_depth: int
+        :return: common path
+        :rtype: str
+        """
         max_depth = max_depth or self.default_max_depth
         max_count = 0
         result = None
