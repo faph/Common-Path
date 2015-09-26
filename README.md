@@ -1,4 +1,5 @@
-[![Travis](https://img.shields.io/travis/faph/Common-Path.svg)]()
+[![Travis](https://img.shields.io/travis/faph/Common-Path.svg)]() 
+[![Binstar Badge](https://anaconda.org/faph/commonpath/badges/installer/conda.svg)](https://conda.anaconda.org/faph)
 
 # Common Path
 
