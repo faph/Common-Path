@@ -71,7 +71,7 @@ class CommonPath(object):
                 min_count *= 0.9
         return result
 
-    def absolute(self, max_depth=None):
+    def most(self, max_depth=None):
         max_depth = max_depth or self.default_max_depth
         max_count = 0
         result = None

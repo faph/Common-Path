@@ -27,7 +27,7 @@ You want to know the common path `C:\Users\Adam Smith\Documents`, ignoring the o
 If you really want to know the absolute *most* common path:
 
 ```python
->>> CommonPath(history).absolute()
+>>> CommonPath(history).most()
 'C:\\Users'
 ```
 
