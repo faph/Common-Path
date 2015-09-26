@@ -1,4 +1,5 @@
 [![Travis](https://img.shields.io/travis/faph/Common-Path.svg?style=flat-square)]()
+[![Coveralls](https://img.shields.io/coveralls/faph/Common-Path.svg?style=flat-square)]()
 [![Conda](https://anaconda.org/faph/commonpath/badges/installer/conda.svg)](https://conda.anaconda.org/faph)
 
 # Common Path
