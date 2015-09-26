@@ -19,7 +19,7 @@ class TestCommonPath(unittest.TestCase):
         self.assertEqual(CommonPath(self.list2).natural(max_depth=3), normpath('/home/user1'))
 
     def test_abs_paths(self):
-        self.assertEqual(CommonPath(self.list2).absolute(), normpath('/home'))
+        self.assertEqual(CommonPath(self.list2).most(), normpath('/home'))
 
     def test_abs_paths_max_depth(self):
-        self.assertEqual(CommonPath(self.list1).absolute(max_depth=3), normpath('/home/user1'))
+        self.assertEqual(CommonPath(self.list1).most(max_depth=3), normpath('/home/user1'))
