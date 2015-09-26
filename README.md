@@ -1,3 +1,5 @@
+[![Travis](https://img.shields.io/travis/faph/Common-Path.svg)]()
+
 # Common Path
 
 Python package to evaluate the most common file path from a list of paths.
