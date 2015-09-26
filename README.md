@@ -1,6 +1,6 @@
 # Common Path
 
-Python package to evaluate the most common (file) path from a list of paths.
+Python package to evaluate the most common file path from a list of paths.
 
 Say you have a typical file history list:
 
