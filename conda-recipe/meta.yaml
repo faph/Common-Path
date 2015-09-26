@@ -1,0 +1,29 @@
+package:
+  name: commonpath
+  version: {{ environ.get('GIT_DESCRIBE_TAG', '0.0.0')[1:] }}
+
+build:
+  number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
+
+source:
+  git_url: ..
+
+requirements:
+  build:
+    - python
+    - setuptools
+
+  run:
+    - python
+
+test:
+  # Python imports
+  imports:
+    - commonpath
+
+about:
+  home: https://github.com/faph/Common-Path
+  license: MIT
+  license_file: LICENSE
+  summary: Python package to evaluate the most common file path from a list of paths.
+  readme: README.md
