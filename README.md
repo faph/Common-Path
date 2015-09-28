@@ -43,6 +43,22 @@ If you really want to know the absolute *most* common path:
 'C:\\Users'
 ```
 
+Or you want to know what path they *all* have in common?
+
+```python
+>>> commonpath.common(history)
+
+```
+
+As in: none! We'll need to get rid of `D:\\doc4.txt` to get anything in common:
+
+```pyton
+>>> history.pop(3)
+'D:\\doc4.txt'
+>>> commonpath.common(history)
+'C:\\Users'
+```
+
 ## Licence
 
 Distributed under the [MIT licence](LICENSE).
