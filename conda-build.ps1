@@ -16,14 +16,14 @@ foreach ($pyversion in $pyversions) {
     $built_pkgs += $pkg
     conda build conda-recipe --python=$pyversion
     if ($lastexitcode -ne 0) {
-        Throw "Conda build failed with $lastexitcode"
+        Throw "Conda build failed with exit code $lastexitcode"
     }
 
     $pkg_name = (Get-Item $pkg).Name
     foreach ($platform in $other_platforms) {
         conda convert --platform $platform --output-dir $build_folder $pkg
         if ($lastexitcode -ne 0) {
-            Throw "Conda convert failed with $lastexitcode"
+            Throw "Conda convert failed with exit code $lastexitcode"
         }
         $built_pkgs += "$build_folder\$platform\$pkg_name"
     }
