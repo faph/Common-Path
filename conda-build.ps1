@@ -8,7 +8,7 @@ $pyversions = '3.3', '3.4', '3.5'
 $build_platform = 'win-64'
 $other_platforms = 'osx-64', 'linux-64'
 
-$build_folder = "%LOCALAPPDATA%\Continuum\Miniconda3\conda-bld"
+$build_folder = "$env:LOCALAPPDATA\Continuum\Miniconda3\conda-bld"
 
 $built_pkgs = @()
 foreach ($pyversion in $pyversions) {
