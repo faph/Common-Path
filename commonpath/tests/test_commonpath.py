@@ -24,7 +24,7 @@ class TestCommonPath(unittest.TestCase):
         self.assertEqual(commonpath.natural(self.list2), normpath('/home/user1/tmp'))
 
     def test_nat_paths_list3(self):
-        self.assertEqual(commonpath.natural(self.list3), normpath('C:\\Users\\Adam Smith\\Documents'))
+        self.assertEqual(commonpath.natural(self.list3), normpath('C:/Users/Adam Smith/Documents'))
 
     def test_nat_paths_max_depth(self):
         self.assertEqual(commonpath.natural(self.list2, max_depth=3), normpath('/home/user1'))
@@ -33,7 +33,7 @@ class TestCommonPath(unittest.TestCase):
         self.assertEqual(commonpath.most(self.list2), normpath('/home'))
 
     def test_most_paths_list3(self):
-        self.assertEqual(commonpath.most(self.list3), normpath('C:\\Users'))
+        self.assertEqual(commonpath.most(self.list3), normpath('C:/Users'))
 
     def test_most_paths_max_depth(self):
         self.assertEqual(commonpath.most(self.list1, max_depth=3), normpath('/home/user1'))
