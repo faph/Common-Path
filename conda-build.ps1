@@ -12,12 +12,12 @@ $build_folder = "$env:LOCALAPPDATA\Continuum\Miniconda3\conda-bld"
 
 $built_pkgs = @()
 foreach ($pyversion in $pyversions) {
-    $pkg = conda build conda-recipe --python=$pyversion --output
-    $built_pkgs += $pkg
     conda build conda-recipe --python=$pyversion
     if ($lastexitcode -ne 0) {
         Throw "Conda build failed with exit code $lastexitcode"
     }
+    $pkg = conda build conda-recipe --python=$pyversion --output
+    $built_pkgs += $pkg
 
     $pkg_name = (Get-Item $pkg).Name
     foreach ($platform in $other_platforms) {
