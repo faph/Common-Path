@@ -1,4 +1,7 @@
-[![Travis](https://img.shields.io/travis/faph/Common-Path.svg)]()
+![Travis](https://img.shields.io/travis/faph/Common-Path.svg?style=flat-square)
+![Coveralls](https://img.shields.io/coveralls/faph/Common-Path.svg?style=flat-square)
+[![Conda](https://anaconda.org/faph/commonpath/badges/installer/conda.svg)](https://anaconda.org/faph/commonpath)
+[![PyPI](https://img.shields.io/pypi/v/commonpath.svg?style=flat-square)](https://pypi.python.org/pypi/commonpath)
 
 # Common Path
 
@@ -37,6 +40,22 @@ If you really want to know the absolute *most* common path:
 
 ```python
 >>> commonpath.most(history)
+'C:\\Users'
+```
+
+Or you want to know what path they *all* have in common?
+
+```python
+>>> commonpath.common(history)
+
+```
+
+As in: none! We'll need to get rid of `D:\\doc4.txt` to get anything in common:
+
+```pyton
+>>> history.pop(3)
+'D:\\doc4.txt'
+>>> commonpath.common(history)
 'C:\\Users'
 ```
 

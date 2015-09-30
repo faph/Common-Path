@@ -27,6 +27,7 @@ from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
 
+import re
 from collections import defaultdict, Counter
 from os.path import sep, normpath
 
@@ -65,6 +66,20 @@ def most(paths, max_depth=None):
     return CommonPath(paths).most(max_depth)
 
 
+def common(paths, max_depth=None):
+    """
+    Return the longest path that all paths have in common.
+
+    :param paths: List of paths to analyse
+    :type paths: list
+    :param max_depth: maximum path depth to analyse
+    :type max_depth: int
+    :return: common path
+    :rtype: str
+    """
+    return CommonPath(paths).common(max_depth)
+
+
 class CommonPath(object):
     #: Default maximum path depth to analyse
     default_max_depth = 99
@@ -75,12 +90,12 @@ class CommonPath(object):
 
     def __init__(self, paths):
         #: List of paths to analyse
-        self.paths = list(map(normpath, paths))
+        self.paths = [normpath(p) for p in paths]
         #: Most common path for different path depths
         self.most_common = self._most_common()
 
     def _most_common(self):
-        split_paths = [p.split(sep) for p in self.paths]
+        split_paths = [re.split('[\\\\/]+', p) for p in self.paths]  # Allow both `\` and `/` as separator
         # Dict of list of unpacked paths with path depth level as keys
         # e.g. {0: ['', '', ''],
         #       1: ['/home', '/home', '/usr'],
@@ -88,7 +103,7 @@ class CommonPath(object):
         levels = defaultdict(list)
         for split_path in split_paths:
             for level, ele in enumerate(split_path):
-                levels[level].append(sep.join(split_path[0:level + 1]))
+                levels[level].append(sep.join(split_path[0:level + 1]))  # Return with the system's separator
 
         # List of tuples (most common path, count) by increasing path depth
         # e.g. [('', 3),
@@ -119,5 +134,16 @@ class CommonPath(object):
                 break
             else:
                 max_count = common[1]
+                result = common[0]
+        return result
+
+    def common(self, max_depth=None):
+        """Return the real common deepest path"""
+        max_depth = max_depth or self.default_max_depth
+        result = None
+        for i, common in enumerate(self.most_common):
+            if common[1] < len(self.paths) or i > max_depth - 1:
+                break
+            else:
                 result = common[0]
         return result
